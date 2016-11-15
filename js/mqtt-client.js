@@ -38,8 +38,8 @@ function publishMessage(topic, message) {
 function onConnect() {
   // Once a connection has been made, make a subscription and send a message.
   console.log("onConnect");
-  client.subscribe("MSG/1");
-  client.subscribe("MSG/2");
+  client.subscribe("MSG/1/#");
+  client.subscribe("MSG/2/#");
 }
 
 // called when the client loses its connection
