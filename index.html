@@ -1,0 +1,168 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>Push Message</title>
+<meta name="Generator" content="TextPad">
+<meta name="Author" content="L. TRABATTONI">
+<script type="text/javascript" src="js/mqttws31.js"></script>
+<script type="text/javascript" src="js/mqtt-client.js"></script>
+<style>
+body {
+  margin:0;
+  padding:0;
+}
+textarea {
+  height:200px;
+  width:400px;
+}
+
+label, td {
+  vertical-align:top;
+}
+
+.bottomAlign {
+  vertical-align:bottom;
+}
+
+#error {
+  position: absolute;
+  width:100%;
+  height:4em;
+  min-height:4em;
+  bottom:0;
+  background-color:#eee;
+  border-top:1px solid #ccc;
+  margin-left:auto;
+  margin-right:auto;
+}
+
+#pushMessageContainer {
+  border:1px solid #ccc;
+  position:absolute;
+  width:550px;
+  top:4px;
+  left:4px;
+  bottom:4.2em;
+  padding:4px;
+}
+
+#receivedMessagesContainer {
+  border:1px solid #ccc;
+  position:absolute;
+  /* width:400px; */
+  /* height:600px; */
+  top:4px;
+  right:4px;
+  left:580px;
+  bottom:4.2em;
+  background-color:#afa;
+  padding:4px;
+}
+
+</style>
+<script>
+function getSelectedBoard() {
+  var o = document.getElementById("boardsList");
+ return o.options[o.selectedIndex].value;
+}
+
+function pushText() {
+  var o = document.getElementById("textMessage");
+  if (o.value != "") {
+    var recipient = getSelectedBoard();
+    var topic = "MSG/" + recipient + "/TEXT";
+    var payload = o.value;
+    //alert("Yep push message\ntopic = " + topic + "\n payload = " + payload);
+    publishMessage(topic, payload);
+  }
+}
+function pushVideo() {
+  var o = document.getElementById("youtubeVideoId");
+  var ot = document.getElementById("youtubeVideoTitle");
+  if (o.value != "") {
+    var recipient = getSelectedBoard();
+    var topic = "MSG/" + recipient + "/VIDEO";
+    var payload = '';
+    payload += (o.value != "" ? ot.value + "<br>" : "");
+    payload += '<iframe width="426" height="240" src="https://youtube.com/embed/';
+    payload += o.value;
+    payload += '?rel=0&showinfo=0&modestbranding=1&controls=2&fs=0&autoplay=1" frameborder="0"></iframe>';
+    //alert("Push video\ntopic = " + topic + "\n payload = " + payload);
+    publishMessage(topic, payload);
+  }
+}
+
+function pushImage() {
+	if (document.getElementById('imageFile').files.length > 0) {
+		var reader = new FileReader()
+		reader.onload = function() {
+			var arrayBuffer = this.result;
+			var array = new Uint8Array(arrayBuffer);
+			// var binaryString = String.fromCharCode.apply(null, array);
+
+		    var recipient = getSelectedBoard();
+			var topic = "MSG/" + recipient + "/IMAGE";
+			var payload = btoa(String.fromCharCode.apply(null, array));
+	    	// showReceivedMessage(topic, payload);
+		    publishMessage(topic, payload);
+		}
+  		reader.readAsArrayBuffer(document.getElementById('imageFile').files[0]);
+    }
+}
+
+function showReceivedMessage(from, message) {
+	var o = document.getElementById("receivedMessages");
+	var receivedMessages = document.getElementById("receivedMessages");
+	var tr = document.createElement("tr");
+	var cell1 = document.createElement('td');
+	var cell2 = document.createElement('td');
+	cell1.innerHTML = from;
+	cell2.innerHTML = message;
+	tr.appendChild(cell1);
+	tr.appendChild(cell2);
+	receivedMessages.appendChild(tr);
+}
+
+</script>
+</head>
+<body>
+<div id="pushMessageContainer">
+<table>
+<tr><td>Login</td><td><input type="text"     id="login"    value=""></input></td></tr>
+<tr><td>Password</td><td><input type="password" id="password" value=""></input></td></tr>
+</table>
+<button onclick="connectClientNow()">Connect</button>
+<h1>Push message</h1>
+<p>Select board :
+<select id="boardsList">
+  <option value="ALL">All connected boards</option>
+  <option value="1">Board #1</option>
+  <option value="2">Board #2</option>
+</select>
+</p>
+<hr>
+<h2>Simple text</h2>
+<table>
+<tr><td>Message: </td><td rowspan="2"><textarea id="textMessage">Hello world!</textarea></td></tr>
+<tr><td class="bottomAlign"><button onclick="pushText()">Push text</button></td></tr>
+</table>
+<hr>
+<h2>Youtube online video</h2>
+<table>
+<tr><td>Short description text:</td><td><input id="youtubeVideoTitle" value="Jolene by Miley Cyrus"></input></td><td></td></tr>
+<tr><td>Video ID: </td><td><input id="youtubeVideoId" value="wOwblaKmyVw"></input></td><td><button onclick="pushVideo()">Push video</button></td></tr>
+</table>
+<hr>
+<h2>Send image</h2>
+Input image file <input id="imageFile" type="file"></input> <button onclick="pushImage()">Push image</button>
+</div>
+<div id="receivedMessagesContainer">
+<h1>Received messages</h1>
+<table id="receivedMessages">
+</table>
+</div>
+
+<div id="error"></div>
+</body>
+</html>
