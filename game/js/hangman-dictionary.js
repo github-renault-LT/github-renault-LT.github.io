@@ -143,7 +143,7 @@ const DICTIONARY = (function() {
 
   function _initialize(options = {}) {
     _options = {
-      ...{base_dir: "dictionaries", list: "_index.json"}, 
+      ...{base_dir: "dictionaries", list: "index.json"}, 
       ...options
     }
   }

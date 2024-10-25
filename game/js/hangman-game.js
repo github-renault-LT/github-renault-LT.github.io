@@ -252,7 +252,7 @@ const GAME = (function(params) {
     HMI.initializeFader();
     i18n.initializeHmiMessages(PARAMETERS.getLanguage());
 
-    DICTIONARY.initialize({base_dir: "dictionaries", list: "_index.json"})
+    DICTIONARY.initialize({base_dir: "dictionaries", list: "index.json"})
     DICTIONARY.buildDictionariesSelector('#dictionaries-selector', true);
 
     const score = PARAMETERS.getScore();
