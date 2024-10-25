@@ -11,6 +11,7 @@ body {
   --image-width-with-border: calc(var(--image-width) + 2 * var(--image-border));
   --image-height-with-border: calc(var(--image-height) + 2 * var(--image-border));
   --right-colum-width: calc(var(--container-width) - var(--image-width) - 2 * var(--image-border) - 1.5rem);
+  --word-font-size: 24pt;
   font-family: Arial, helvetica, sans-serif;
 }
 
@@ -57,7 +58,7 @@ body.large {
 }
 
 #word {
-  font-size:24pt;
+  font-size: var(--word-font-size);
   font-weight:bold;
   color:yellow;
   background-color:black;
@@ -70,6 +71,7 @@ body.large {
   left:4px;
   width: calc(var(--container-width, 800px) - 20px);
 }
+
 #definition {
   font-size: 18pt;
   color:white;

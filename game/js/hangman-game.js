@@ -23,7 +23,8 @@ const GAME = (function(params) {
 
       // set to uppercase and remove diacritics (accents)
       _normalizedWord = UTILS.removeDiacritics(_currentWord.w.toUpperCase());
-
+      
+      // console.log(_normalizedWord)
       // first letter
       firstLetter = _normalizedWord.charAt(0);
       // last letter
@@ -45,7 +46,7 @@ const GAME = (function(params) {
           // space letter, always display
           _displayedWord += " ";
         }
-        else if (_normalizedWord.charAt(i) == "'") {
+        else if ((_normalizedWord.charAt(i) == "’") || (_normalizedWord.charAt(i) == "'")) {
           // apostrophe letter, always display
           _displayedWord += "'";
         }
@@ -58,6 +59,7 @@ const GAME = (function(params) {
         found = true;
       }
     }
+    UTILS.changeWordFontsize(_displayedWord);
 
     // enable all keyboard keys, except first and last letter ones
     let keyboardKey;

@@ -100,9 +100,66 @@ const UTILS = (function() {
     return str.substr(0, index) + chr + str.substr(index + 1);
   }
 
+  const _getCSSVariable = function(css_var_name) {
+    if (css_var_name) {
+      return getComputedStyle(document.body).getPropertyValue(css_var_name);
+    }
+    return null;
+  }
+  const _setCSSVariable = function(css_var_name, value) {
+    if (css_var_name) {
+      document.body.style.setProperty(css_var_name, value);
+    }
+  }
+
+  const _changeWordFontsize = function(normalizedWord) {
+    const w = document.getElementById('word');
+    const css_var_name = "--word-font-size";
+
+    let font_size = "24pt";
+    
+    const viewport_size = _getCSSVariable("--container-width");
+    if (viewport_size == "800px") {
+      if (normalizedWord.length <= 28) {
+        font_size = "24pt";
+      }
+      else if (normalizedWord.length <= 34) {
+        font_size = "18pt";
+      }
+      else if (normalizedWord.length <= 44) {
+        font_size = "12pt";
+      }
+      else {
+        font_size = "10pt";
+      }
+    }
+    else {
+      if (normalizedWord.length <= 36) {
+        font_size = "24pt";
+      }
+      else if (normalizedWord.length <= 44) {
+        font_size = "18pt";
+      }
+      else if (normalizedWord.length <= 52) {
+        font_size = "14pt";
+      }
+      else if (normalizedWord.length <= 59) {
+        font_size = "11pt";
+      }
+      else {
+        font_size = "9pt";
+      }
+      
+    }
+    // console.log(normalizedWord.length, font_size)
+    _setCSSVariable(css_var_name, font_size);
+    
+  }
+
   return {
     replaceCharAt: _replaceCharAt,
-    removeDiacritics: _removeDiacritics
+    removeDiacritics: _removeDiacritics,
+    changeWordFontsize: _changeWordFontsize
   }
 
 })();
