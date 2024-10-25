@@ -1,0 +1,9 @@
+[
+   {"f":"default.json", "d":"Quelques mots français", "n": "default"},
+   {"f":"asterix.json", "d":"Les Aventures d'Astérix", "n": "asterix"},
+   {"f":"lucky-luke.json", "d":"Lucky Luke", "n": "lucky-luke", "v": false},
+   {"f":"fromages.json", "d":"Les fromages", "n": "fromages", "v": false},
+   {"f":"haddock.json", "d":"Capitaine Haddock", "n": "haddock"},
+   {"f":"pendu.json", "d":"7272 mots français", "n": "pendu"},
+   {"f":"pendu-en.json", "d":"15365 english words", "n": "pendu-en"}
+]

@@ -1,0 +1,20 @@
+@font-face {
+  font-family: "Vera Mono Bold";
+  src: url("fonts/VeraMono-Bold.ttf");
+}
+@font-face {
+  font-family: "Vera Mono Bold Italic";
+  src: url("fonts/VeraMono-Bold-Italic.ttf");
+}
+@font-face {
+  font-family: "Vera Mono Italic";
+  src: url("fonts/VeraMono-Italic.ttf");
+}
+@font-face {
+  font-family: "Vera Mono";
+  src: url("fonts/VeraMono.ttf");
+}
+
+#word {
+  font-family: Courier, "Vera Mono Bold", monospace;
+}

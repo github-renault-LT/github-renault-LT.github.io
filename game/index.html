@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<title>Hangman game</title>
+<link rel="shortcut icon" type="image/png" href="icon.png"/>
+
+<meta name="Author" content="L. TRABATTONI">
+<meta name="Keywords" content="jeu du pendu">
+<meta name="Description" content="Jeu du pendu">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link media="screen" href="res/hangman.css" rel="preload" as="style" onload="this.onload=null;this.rel='stylesheet'">
+<link media="screen" href="res/fonts.css" rel="preload" as="style" onload="this.onload=null;this.rel='stylesheet'">
+<link media="screen" href="res/flags-light.css" rel="preload" as="style" onload="this.onload=null;this.rel='stylesheet'">
+
+<!-- note that settings the defer attribute to hangman.js drop drastically performance (in Chrome lighthouse) from 100% to 54% ! -->
+<script defer src="js/hangman-dictionary.js"></script>
+<script defer src="js/hangman-hmi.js"></script>
+<script defer src="js/hangman-storage.js"></script>
+<script defer src="js/hangman-i18n.js"></script>
+<script defer src="js/hangman-utils.js"></script>
+<script defer src="js/hangman-game.js"></script>
+<script src="js/hangman.js"></script>
+</head>
+
+<body class="small">
+<div id="container">
+ <div id="drawing" class="unselectable">
+  <img src="res/images/webp/potence0.webp" alt="" class="opaque">
+  <img loading="lazy" src="res/images/webp/potence1.webp" alt="" decoding="async" class="hidden">
+  <img loading="lazy" src="res/images/webp/potence2.webp" alt="" decoding="async" class="hidden">
+  <img loading="lazy" src="res/images/webp/potence3.webp" alt="" decoding="async" class="hidden">
+  <img loading="lazy" src="res/images/webp/potence4.webp" alt="" decoding="async" class="hidden">
+  <img loading="lazy" src="res/images/webp/potence5.webp" alt="" decoding="async" class="hidden">
+  <img loading="lazy" src="res/images/webp/potence6.webp" alt="" decoding="async" class="hidden">
+  <img loading="lazy" src="res/images/webp/potence7.webp" alt="" decoding="async" class="hidden">
+  <img loading="lazy" src="res/images/webp/potence8.webp" alt="" decoding="async" class="hidden">
+ </div>
+ <div id="word" class="unselectable"></div>
+ <div id="definition" class="unselectable scroll"></div>
+ <div id="keyboard-container">
+ <table id="keyboard" class="unselectable">
+  <tr id="keyboardRow0">
+   <td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td>
+   <td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td>
+   <td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td>
+   <td></td>
+  </tr>
+  <tr id="keyboardRow0">
+   <td colspan="31" class="dictionaries-selector"><span class="dictionaries-selector v-hidden"><span>Dictionnaire :</span> <select id="dictionaries-selector"></select></span></td>
+  </tr>
+  <tr id="keyboardRow1">
+   <td class="keyDisabled" id="keyA" colspan="3">A</td>
+   <td class="keyDisabled" id="keyZ" colspan="3">Z</td>
+   <td class="keyDisabled" id="keyE" colspan="3">E</td>
+   <td class="keyDisabled" id="keyR" colspan="3">R</td>
+   <td class="keyDisabled" id="keyT" colspan="3">T</td>
+   <td class="keyDisabled" id="keyY" colspan="3">Y</td>
+   <td class="keyDisabled" id="keyU" colspan="3">U</td>
+   <td class="keyDisabled" id="keyI" colspan="3">I</td>
+   <td class="keyDisabled" id="keyO" colspan="3">O</td>
+   <td class="keyDisabled" id="keyP" colspan="3">P</td>
+   <td></td>
+  </tr>
+  <tr id="keyboardRow2">
+   <td></td>
+   <td class="keyDisabled" id="keyQ" colspan="3">Q</td>
+   <td class="keyDisabled" id="keyS" colspan="3">S</td>
+   <td class="keyDisabled" id="keyD" colspan="3">D</td>
+   <td class="keyDisabled" id="keyF" colspan="3">F</td>
+   <td class="keyDisabled" id="keyG" colspan="3">G</td>
+   <td class="keyDisabled" id="keyH" colspan="3">H</td>
+   <td class="keyDisabled" id="keyJ" colspan="3">J</td>
+   <td class="keyDisabled" id="keyK" colspan="3">K</td>
+   <td class="keyDisabled" id="keyL" colspan="3">L</td>
+   <td class="keyDisabled" id="keyM" colspan="3">M</td>
+  </tr>
+  <tr id="keyboardRow3">
+   <td colspan="2"></td>
+   <td class="keyDisabled" id="keyW" colspan="3">W</td>
+   <td class="keyDisabled" id="keyX" colspan="3">X</td>
+   <td class="keyDisabled" id="keyC" colspan="3">C</td>
+   <td class="keyDisabled" id="keyV" colspan="3">V</td>
+   <td class="keyDisabled" id="keyB" colspan="3">B</td>
+   <td class="keyDisabled" id="keyN" colspan="3">N</td>
+   <td colspan="3"></td>
+   <td colspan="4" class="flag" onclick="i18n.initializeHmiMessages('fr')"><div class="f32"><div class="flag fr"></div></div></td>
+   <td colspan="4" class="flag" onclick="i18n.initializeHmiMessages('en')"><div class="f32"><div class="flag gb"></div></div></td>
+  </tr>
+  <tr id="keyboardRow5">
+   <td class="key" id="keyPlay" colspan="8" onclick="GAME.start()"></td>
+   <td></td>
+   <td colspan="10" class="score"><span id="score"></span></td>
+   <td></td>
+   <td class="key" id="keyClearScore" onclick="GAME.confirmClearScore()" colspan="3"></td>
+   <td class="keyDisabled" id="keyStop" colspan="8" ></td>
+  </tr>
+ </table>
+ </div>
+</div>
+
+<div id="fader" onclick="HMI.closeConfirmBox();HMI.closeMessageBox();"></div>
+
+<div id="messageBox">
+<div id="messageBoxTitle" class="unselectable"></div>
+<div id="messageBoxContent" class="unselectable"></div>
+<div id="messageBoxButtons"><button id="messageBoxButtonClose" onclick="HMI.closeMessageBox()"></button></div>
+</div>
+
+<div id="confirmBox">
+ <div id="confirmBoxTitle"></div>
+ <div id="confirmBoxContent"></div>
+ <div id="confirmBoxButtons">
+  <button id="confirmBoxButtonYes"></button> &#160; <button id="confirmBoxButtonNo"></button>
+ </div>
+</div>
+
+<!-- button onclick="getData('word','definition')">Get next word</button -->
+<!-- button onclick="DICTIONARY.fetchDictionary('dictionaries/asterix.json')">Get next word</button -->
+</body>
+</html>
